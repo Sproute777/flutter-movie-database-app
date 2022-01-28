@@ -1,8 +1,11 @@
 import 'package:equatable/equatable.dart';
+import 'package:json_annotation/json_annotation.dart';
 
 import '../../domain/entities/tv.dart';
 import '../../domain/entities/tv_detail.dart';
+part 'tv_table.g.dart';
 
+@JsonSerializable()
 class TvTable extends Equatable {
   final String? firstAirDate;
   final int id;
@@ -20,14 +23,18 @@ class TvTable extends Equatable {
     required this.voteAverage,
   });
 
-  factory TvTable.fromMap(Map<String, dynamic> map) => TvTable(
-        firstAirDate: map['firstAirDate'],
-        id: map['id'],
-        name: map['name'],
-        overview: map['overview'],
-        posterPath: map['posterPath'],
-        voteAverage: map['voteAverage'],
-      );
+  factory TvTable.fromMap(Map<String, dynamic> json) => _$TvTableFromJson(json);
+
+  Map<String, dynamic> toMap() => _$TvTableToJson(this);
+
+  // factory TvTable.fromMap(Map<String, dynamic> map) => TvTable(
+  //       firstAirDate: map['firstAirDate'],
+  //       id: map['id'],
+  //       name: map['name'],
+  //       overview: map['overview'],
+  //       posterPath: map['posterPath'],
+  //       voteAverage: map['voteAverage'],
+  //     );
 
   factory TvTable.fromEntity(TvDetail tv) => TvTable(
         firstAirDate: tv.firstAirDate,
@@ -38,14 +45,14 @@ class TvTable extends Equatable {
         voteAverage: tv.voteAverage,
       );
 
-  Map<String, dynamic> toMap() => {
-        'firstAirDate': firstAirDate,
-        'id': id,
-        'name': name,
-        'overview': overview,
-        'posterPath': posterPath,
-        'voteAverage': voteAverage,
-      };
+  // Map<String, dynamic> toMap() => {
+  //       'firstAirDate': firstAirDate,
+  //       'id': id,
+  //       'name': name,
+  //       'overview': overview,
+  //       'posterPath': posterPath,
+  //       'voteAverage': voteAverage,
+  //     };
 
   Tv toEntity() => Tv.watchList(
         firstAirDate: firstAirDate,

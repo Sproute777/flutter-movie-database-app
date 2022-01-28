@@ -1,18 +1,26 @@
 import 'package:equatable/equatable.dart';
+import 'package:json_annotation/json_annotation.dart';
 
 import '../../domain/entities/movie_detail.dart';
 import 'genre_model.dart';
+part 'movie_detail_response.g.dart';
 
+@JsonSerializable()
 class MovieDetailResponse extends Equatable {
+  @JsonKey(name: 'backdrop_path')
   final String? backdropPath;
   final List<GenreModel> genres;
   final int id;
   final String overview;
+  @JsonKey(name: 'poster_path')
   final String? posterPath;
+  @JsonKey(name: 'release_date')
   final String releaseDate;
   final int runtime;
   final String title;
+  @JsonKey(name: 'vote_average')
   final double voteAverage;
+  @JsonKey(name: 'vote_count')
   final int voteCount;
 
   const MovieDetailResponse({
@@ -29,32 +37,9 @@ class MovieDetailResponse extends Equatable {
   });
 
   factory MovieDetailResponse.fromJson(Map<String, dynamic> json) =>
-      MovieDetailResponse(
-        backdropPath: json['backdrop_path'],
-        genres: List<GenreModel>.from(
-            json['genres'].map((x) => GenreModel.fromJson(x))),
-        id: json['id'],
-        overview: json['overview'],
-        posterPath: json['poster_path'],
-        releaseDate: json['release_date'],
-        runtime: json['runtime'],
-        title: json['title'],
-        voteAverage: json['vote_average'].toDouble(),
-        voteCount: json['vote_count'],
-      );
+      _$MovieDetailResponseFromJson(json);
 
-  Map<String, dynamic> toJson() => {
-        'backdrop_path': backdropPath,
-        'genres': List<dynamic>.from(genres.map((x) => x.toJson())),
-        'id': id,
-        'overview': overview,
-        'poster_path': posterPath,
-        'release_date': releaseDate,
-        'runtime': runtime,
-        'title': title,
-        'vote_average': voteAverage,
-        'vote_count': voteCount,
-      };
+  Map<String, dynamic> toJson() => _$MovieDetailResponseToJson(this);
 
   MovieDetail toEntity() => MovieDetail(
         backdropPath: backdropPath,

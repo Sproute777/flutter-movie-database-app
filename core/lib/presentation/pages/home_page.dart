@@ -74,9 +74,9 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
       child: AnimatedBuilder(
         animation: _drawerTween,
         builder: (context, child) {
-          double slide = 300.0 * _drawerTween.value;
-          double scale = 1.0 - (_drawerTween.value * 0.25);
-          double radius = _drawerTween.value * 30.0;
+          double slide = 240.0 * _drawerTween.value;
+          double scale = 1.0 - (_drawerTween.value * 0.15);
+          double radius = _drawerTween.value * 20.0;
           double rotate = _drawerTween.value * -0.139626;
           double toolbarOpacity = 1.0 - _drawerTween.value;
 

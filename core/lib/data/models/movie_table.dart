@@ -1,8 +1,11 @@
 import 'package:equatable/equatable.dart';
+import 'package:json_annotation/json_annotation.dart';
 
 import '../../domain/entities/movie.dart';
 import '../../domain/entities/movie_detail.dart';
+part 'movie_table.g.dart';
 
+@JsonSerializable()
 class MovieTable extends Equatable {
   final String? releaseDate;
   final int id;
@@ -20,13 +23,10 @@ class MovieTable extends Equatable {
     required this.voteAverage,
   });
 
-  factory MovieTable.fromMap(Map<String, dynamic> map) => MovieTable(
-      releaseDate: map['releaseDate'],
-      id: map['id'],
-      title: map['title'],
-      posterPath: map['posterPath'],
-      overview: map['overview'],
-      voteAverage: map['voteAverage']);
+  factory MovieTable.fromMap(Map<String, dynamic> json) =>
+      _$MovieTableFromJson(json);
+
+  Map<String, dynamic> toMap() => _$MovieTableToJson(this);
 
   factory MovieTable.fromEntity(MovieDetail movie) => MovieTable(
         releaseDate: movie.releaseDate,
@@ -36,15 +36,6 @@ class MovieTable extends Equatable {
         overview: movie.overview,
         voteAverage: movie.voteAverage,
       );
-
-  Map<String, dynamic> toMap() => {
-        'releaseDate': releaseDate,
-        'id': id,
-        'title': title,
-        'posterPath': posterPath,
-        'overview': overview,
-        'voteAverage': voteAverage,
-      };
 
   Movie toEntity() => Movie.watchlist(
         releaseDate: releaseDate,

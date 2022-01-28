@@ -1,11 +1,17 @@
 import 'package:equatable/equatable.dart';
+import 'package:json_annotation/json_annotation.dart';
 
 import '../../domain/entities/media_image.dart';
+part 'media_image_model.g.dart';
 
+@JsonSerializable(createToJson: false)
 class MediaImageModel extends Equatable {
   final int id;
+  @JsonKey(fromJson: _backdropsFromJson, name: 'backdrops')
   final List<String> backdropPaths;
+  @JsonKey(fromJson: _logosFromJson, name: 'logos')
   final List<String> logoPaths;
+  @JsonKey(fromJson: _postersFromJson, name: 'posters')
   final List<String> posterPaths;
 
   const MediaImageModel({
@@ -15,19 +21,20 @@ class MediaImageModel extends Equatable {
     required this.posterPaths,
   });
 
+  static List<String> _backdropsFromJson(Object json) {
+    return (json as Iterable).map((x) => x['file_path']).toList().cast();
+  }
+
+  static List<String> _logosFromJson(Object json) {
+    return (json as Iterable).map((x) => x['file_path']).toList().cast();
+  }
+
+  static List<String> _postersFromJson(Object json) {
+    return (json as Iterable).map((x) => x['file_path']).toList().cast();
+  }
+
   factory MediaImageModel.fromJson(Map<String, dynamic> json) =>
-      MediaImageModel(
-        id: json['id'],
-        backdropPaths: List<String>.from(
-          json['backdrops'].map((x) => x['file_path']),
-        ),
-        logoPaths: List<String>.from(
-          json['logos'].map((x) => x['file_path']),
-        ),
-        posterPaths: List<String>.from(
-          json['posters'].map((x) => x['file_path']),
-        ),
-      );
+      _$MediaImageModelFromJson(json);
 
   MediaImage toEntity() => MediaImage(
         id: id,
